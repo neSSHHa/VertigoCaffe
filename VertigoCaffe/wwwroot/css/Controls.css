@@ -1,0 +1,394 @@
+﻿body {
+    margin: 0 !important;
+    max-width: none;
+    max-height: none;
+    overflow: hidden;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.5;
+    color: #333;
+    background-color: #fff;
+}
+a {
+    color: #0077cc;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+    a:hover {
+        text-decoration: underline;
+    }
+
+span
+{
+    color: red;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: Arial, sans-serif;
+    font-weight: bold;
+    line-height: 1.2;
+    margin-bottom: 0.5em;
+}
+
+::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+
+}
+
+::-webkit-scrollbar-track {
+    background-color: #f1f1f1;
+    border-radius: 20px;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #888;
+    border-radius: 5px;
+}
+
+    ::-webkit-scrollbar-thumb:hover {
+        background-color: #555;
+    }
+
+
+.container {
+    margin: 0!important;
+    padding: 0!important;
+    max-width: none;
+    max-height: none;
+}
+input[type=text], input[type=email], input[type=password], textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    margin-bottom: 10px;
+    font-size: 16px;
+}
+
+button[type=submit], input[type=submit] {
+    background-color: #0077cc;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 12px 20px;
+    cursor: pointer;
+}
+
+/* Tables */
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+th, td {
+    text-align: left;
+    padding: 8px;
+}
+
+th {
+    background-color: #0077cc;
+    color: #fff;
+}
+
+.content{
+    display: flex;
+    flex-direction: row;
+    
+}
+.contact-profile {
+    background-color: darkred;
+    max-height: 100vh;
+}
+#frame {
+    background: #E6EAEA;
+    height: 100vh;
+   
+}
+
+    #frame .content {
+        height: 100%;
+        position: relative;
+    }
+
+        #frame .content .message-input {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: #ccc;
+            padding: 10px 10px 5px;
+
+        }
+
+        #frame .content .contact-profile {
+         
+        }
+
+            #frame .content .contact-profile img {
+                width: 40px;
+                border-radius: 50%;
+                float: left;
+                margin: 9px 12px 0 9px;
+            }
+
+            #frame .content .contact-profile p {
+                margin: 0;
+            }
+
+#close_chat {
+    font-size: 30px;
+    margin: 0px 12px 12px 12px;
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+#frame .content .messages {
+    width: 100%;
+    height: calc(100% - 60px);
+    position: relative;
+}
+.imageWrapper {
+    margin-top: 50px;
+    width: 100%;
+    height: 30%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.info{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin-top: 25px;
+    font-weight: bold;
+    font-size: 20pt;
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: white;
+}
+.imageWrapper img {
+    width: 50% !important;
+    margin-right: auto;
+    border-radius: 50%;
+    border: 1px solid grey;
+}
+
+.panel {
+    height: calc(100% - 67px); /* here 67px is message input height */
+
+    background-color: rgb(100,100,100);
+    height: 100%;
+
+}
+
+#msgs {
+    padding: 0px;
+    overflow: auto;
+    margin: 0;
+    height: 100%;
+}
+
+#frame .content .messages ul li {
+    display: inline-block;
+    clear: both;
+    float: left;
+    margin: 15px 15px 5px 15px;
+    width: calc(100% - 25px);
+    font-size: 0.9em;
+}
+
+    #frame .content .messages ul li.sent img {
+        margin: 6px 8px 0 0;
+    }
+
+    #frame .content .messages ul li img {
+        width: 22px;
+        border-radius: 50%;
+        float: left;
+    }
+
+    #frame .content .messages ul li.sent p {
+        background: #435f7a;
+        color: #f5f5f5;
+    }
+
+#frame .content .messages ul li p {
+    display: inline-block;
+    padding: 10px 15px;
+    border-radius: 20px;
+    max-width: 205px;
+    line-height: 130%;
+}
+
+#frame .content .messages ul li.replies img {
+    float: right;
+    margin: 6px 0 0 8px;
+}
+
+#message_content {
+    line-height: 13px;
+    border: 1px solid #ced4da;
+   
+}
+
+.contact-profile{
+    width: 25%!important;
+}
+.messages {
+    width: 75% !important;
+    height: 100% !important;
+}
+
+
+
+.productsBody {
+    overflow: hidden;
+    overflow-y: scroll;
+    overflow-x: scroll;
+    max-height: 400px;
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 50px;
+}
+
+.item{
+    color: white;
+}
+.item th img {
+    width: 100px !important;
+}
+
+
+    .productsHeader {
+        display: flex;
+        flex-direction: row;
+        margin: 30px 5% 20px 5%;
+        color: white;
+        align-items: center;
+    }
+.productsHeader button{
+    margin-left: auto!important;
+}
+
+.itemPrices{
+    display: flex;
+    flex-direction: row;
+    gap: 9%;
+    flex-wrap: wrap;
+    margin-top: 4%;
+}
+.itemPrice {
+    display: flex;
+    flex-direction: column;
+    gap: 0%!important;
+}
+.itemPrice p{
+    margin-bottom: 6px;
+}
+.imageItemBody {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    margin-bottom: 6%;
+    margin-top: 6%;
+}
+.imageItemBody img{
+    width: 50%;
+}
+.imageItemBodyInfo{
+    display: flex;
+    flex-direction: column;
+    margin-top: auto!important;
+    margin-bottom: auto!important;
+   gap: 20px;
+}
+
+.imageItemBodyItem p{
+    margin-bottom: 6%;
+}
+
+.amountTypeIdemDetails {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-right: 13vh;
+}
+.itemDates {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top: 5%;
+}
+.itemDate p{
+    margin-bottom: 3%!important;
+}
+
+.userInfo{
+    margin-bottom: 4%;
+    display: flex;
+    flex-direction: row;
+    align-content: center;
+    text-align: center;
+    gap: 3%;
+}
+.userInfo p{
+    margin-top: auto;
+    margin-bottom: auto;
+}
+    .userInfo h6 {
+        margin-top: auto;
+        margin-bottom: auto;
+    }
+
+.userImageDS img{
+    width: 100%;
+}
+
+@media screen and (max-width: 800px) {
+    .content {
+        flex-direction: column;
+    }
+
+    .contact-profile {
+        width: 100% !important;
+    }
+
+        .contact-profile img {
+            width: 20% !important;
+        }
+
+        .contact-profile h4 {
+            margin-top: 5%;
+        }
+
+    .messages {
+        width: 100% !important;
+    }
+
+    body {
+        overflow: scroll!important;
+        position: absolute!important;
+    }
+
+    #frame {
+        height: auto;
+    }
+
+        #frame .content .messages {
+            height: auto;
+            overflow: hidden!important;
+        }
+
+            #frame .content .messages ul li {
+                width: 100%;
+            }
+}
+    
+

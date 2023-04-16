@@ -1,0 +1,53 @@
+﻿@model IEnumerable<Models.Models.Card>
+@{
+    ViewData["Title"] = "Index";
+}
+
+
+<div class="container">
+    <div class="row pt-4">
+        <div class="col-2 p-4">
+        <h1>All items</h1>
+        </div>
+        <div class="col-10 float-end p-4">
+            <a asp-action="Create" class="btn btn-primary float-end">Create</a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <table class="table table-dark">
+                <thead>
+                    <tr>
+                        <th scope="col">Id</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Price 1</th>
+                        <th scope="col">Price 2</th>
+                        <th scope="col">Price 3</th>
+                        <th scope="col">More Prices</th>
+                        <th scope="col">Updated at</th>
+                        <th scope="col">Buttons</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach(var item in Model)
+                    {
+                        <tr>
+                            <th scope="row">@item.Id</th>
+                            <td>@item.Name</td>
+                            <td>@item.Price</td>
+                            <td>@item.Price2</td>
+                            <td>@item.Price3</td>
+                            <td>@item.MorePrices</td>
+                            <td>@item.Updated_at</td>
+                            <td>
+                                <a class="btn btn-info" asp-action="Update" asp-route-Id="@item.Id">Update</a>
+                                <a class="btn btn-danger" asp-action="Delete" asp-route-Id="@item.Id">Delete</a>
+                            </td>
+                        </tr>
+                    }             
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+</div>

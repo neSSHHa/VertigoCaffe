@@ -1,0 +1,560 @@
+﻿@model Models.ViewModels.ControlsVM
+@{
+	ViewData["Title"] = "Home Page";
+
+}
+<link rel="stylesheet" href="~/css/Controls.css" />
+@using Microsoft.AspNetCore.Identity;
+@using Utility;
+@inject UserManager<IdentityUser> _userMenager
+<div>
+	<script defer src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+	<div id="frame">
+		<div class="content">
+			<div class="contact-profile">
+				<div class="imageWrapper">
+					<img src="@Model.CurrentUser.Image" />
+				</div>
+				<div class="info">
+					<h4>@Model.CurrentUser.UserName</h4>
+				</div>
+			</div>
+			<div class="messages panel-body" id="messages">
+				<div class="panel panel-default">
+					<div id="msgs">
+						<div class="products">
+							<div class="productsHeader">
+								<h4>All Products</h4>
+								<button type="button" id="newItemButton" class="btn btn-outline-light" data-bs-toggle="modal" data-bs-target="#newProduct">
+									Create new item
+								</button>
+							</div>
+							<div class="productsBody">
+								<table class="table table-dark">
+									<thead>
+										<tr>
+											<th scope="col">Image</th>
+											<th scope="col">Name</th>
+											<th scope="col">Inherited</th>
+											<th scope="col">Type</th>
+											<th scope="col">Last Updated At</th>
+											<th scope="col">Controls</th>
+										</tr>
+									</thead>
+									<tbody>
+										@foreach (var item in Model.cards)
+										{
+											@if (item.Parent != null)
+											{
+												<tr class="item" id="@item.Id">
+													<th onclick="showItemInfo('@(item.Id)', '@item.Name', '@item.Description', '@item.Price', '@item.Price2', '@item.Price3', '@item.Price4', '@item.MorePrices', '@item.Image.Replace("\\", "/")', '@item.Amount', '@item.Parent.Id', '@item.Parent.Name', '@item.Type.Name', '@item.Created_at', '@item.Updated_at');"><img src="@item.Image" /></th>
+													<td onclick="showItemInfo('@(item.Id)', '@item.Name', '@item.Description', '@item.Price', '@item.Price2', '@item.Price3', '@item.Price4', '@item.MorePrices', '@item.Image.Replace("\\", "/")', '@item.Amount', '@item.Parent.Id', '@item.Parent.Name', '@item.Type.Name', '@item.Created_at', '@item.Updated_at');"><h6>@item.Name</h6></td>
+
+													<td onclick="showItemInfo('@(item.Id)', '@item.Name', '@item.Description', '@item.Price', '@item.Price2', '@item.Price3', '@item.Price4', '@item.MorePrices', '@item.Image.Replace("\\", "/")', '@item.Amount', '@item.Parent.Id', '@item.Parent.Name', '@item.Type.Name', '@item.Created_at', '@item.Updated_at');"><h6>@item.Parent.Name</h6></td>
+													<td onclick="showItemInfo('@(item.Id)', '@item.Name', '@item.Description', '@item.Price', '@item.Price2', '@item.Price3', '@item.Price4', '@item.MorePrices', '@item.Image.Replace("\\", "/")', '@item.Amount', '@item.Parent.Id', '@item.Parent.Name', '@item.Type.Name', '@item.Created_at', '@item.Updated_at');"><p>@item.Type.Name</p></td>
+													<td onclick="showItemInfo('@(item.Id)', '@item.Name', '@item.Description', '@item.Price', '@item.Price2', '@item.Price3', '@item.Price4', '@item.MorePrices', '@item.Image.Replace("\\", "/")', '@item.Amount', '@item.Parent.Id', '@item.Parent.Name', '@item.Type.Name', '@item.Created_at', '@item.Updated_at');"><p>@item.Updated_at</p></td>
+													<td>
+														<div class="productButtons">
+															<button type="button" id="product@(item.Id)Button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#product@(item.Id)">
+																Edit
+															</button>
+															<button class="btn btn-outline-danger" onclick="return validateDelete('@item.Name','@item.Id');" @*asp-action="Delete" asp-route-id="@item.Id"*@>Delete</button>
+														</div>
+													</td>
+												</tr>
+											}
+											else
+											{
+												<tr class="item" id="@item.Id">
+													<th onclick="showItemInfo('@(item.Id)', '@item.Name', '@item.Description', '@item.Price', '@item.Price2', '@item.Price3', '@item.Price4', '@item.MorePrices', '@item.Image.Replace("\\", "/")', '@item.Amount', 0, 'no category', '@item.Type.Name', '@item.Created_at', '@item.Updated_at');"><img src="@item.Image" style="width: 150px" /></th>
+													<td onclick="showItemInfo('@(item.Id)', '@item.Name', '@item.Description', '@item.Price', '@item.Price2', '@item.Price3', '@item.Price4', '@item.MorePrices', '@item.Image.Replace("\\", "/")', '@item.Amount', 0, 'no category', '@item.Type.Name', '@item.Created_at', '@item.Updated_at');"><h5>@item.Name</h5></td>
+													<td onclick="showItemInfo('@(item.Id)', '@item.Name', '@item.Description', '@item.Price', '@item.Price2', '@item.Price3', '@item.Price4', '@item.MorePrices', '@item.Image.Replace("\\", "/")', '@item.Amount', 0, 'no category', '@item.Type.Name', '@item.Created_at', '@item.Updated_at');"><h5>No inherited</h5></td>
+
+													<td onclick="showItemInfo('@(item.Id)', '@item.Name', '@item.Description', '@item.Price', '@item.Price2', '@item.Price3', '@item.Price4', '@item.MorePrices', '@item.Image.Replace("\\", "/")', '@item.Amount', 0, 'no category', '@item.Type.Name', '@item.Created_at', '@item.Updated_at');"><p>@item.Type.Name</p></td>
+													<td onclick="showItemInfo('@(item.Id)', '@item.Name', '@item.Description', '@item.Price', '@item.Price2', '@item.Price3', '@item.Price4', '@item.MorePrices', '@item.Image.Replace("\\", "/")', '@item.Amount', 0, 'no category', '@item.Type.Name', '@item.Created_at', '@item.Updated_at');"><p>@item.Updated_at</p></td>
+													<td>
+														<div class="productButtons">
+															<button type="button" id="product@(item.Id)Button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#product@(item.Id)">
+																Edit
+															</button>
+															<button class="btn btn-outline-danger" onclick="return validateDelete('@item.Name','@item.Id');" @*asp-action="Delete" asp-route-id="@item.Id"*@>Delete</button>
+														</div>
+													</td>
+												</tr>
+											}
+										}
+									</tbody>
+								</table>
+
+							</div>
+						</div>
+						
+						@if(User.IsInRole(StaticDetails.ROLE_ADMIN))
+						{
+							<div class="products">
+								<div class="productsHeader">
+									<h4>All Products</h4>
+									<button type="button" id="newItemButton" class="btn btn-outline-light" data-bs-toggle="modal" data-bs-target="#newUser">
+										Create new User
+									</button>
+								</div>
+								<div class="productsBody">
+
+									<table class="table table-dark">
+										<thead>
+											<tr>
+												<th scope="col">Image</th>
+												<th scope="col">Username</th>
+												<th scope="col">Email</th>
+												<th scope="col">Phone</th>
+												<th scope="col">Role</th>
+												<th scope="col">Controls</th>
+											</tr>
+										</thead>
+										<tbody>
+											@foreach (var item in Model.Users)
+											{
+												<tr class="item" id="@item.Id">
+													<th onclick="showUserInfo('@(item.Id)', '@item.UserName', '@item.Email', '@item.PhoneNumber', '@((await _userMenager.GetRolesAsync(item)).FirstOrDefault())', '@item.Image.Replace("\\", "/")');"><img src="@item.Image" style="width: 150px" /></th>
+													<td onclick="showUserInfo('@(item.Id)', '@item.UserName', '@item.Email', '@item.PhoneNumber', '@((await _userMenager.GetRolesAsync(item)).FirstOrDefault())', '@item.Image.Replace("\\", "/")');"><h5>@item.UserName</h5></td>
+													<td onclick="showUserInfo('@(item.Id)', '@item.UserName', '@item.Email', '@item.PhoneNumber', '@((await _userMenager.GetRolesAsync(item)).FirstOrDefault())', '@item.Image.Replace("\\", "/")');"><h5>@item.Email</h5></td>
+
+													<td onclick="showUserInfo('@(item.Id)', '@item.UserName', '@item.Email', '@item.PhoneNumber', '@((await _userMenager.GetRolesAsync(item)).FirstOrDefault())', '@item.Image.Replace("\\", "/")');"><p>@item.PhoneNumber</p></td>
+													<td onclick="showUserInfo('@(item.Id)', '@item.UserName', '@item.Email', '@item.PhoneNumber', '@((await _userMenager.GetRolesAsync(item)).FirstOrDefault())', '@item.Image.Replace("\\", "/")');"><p>@(
+													(await _userMenager.GetRolesAsync(item)).FirstOrDefault()
+													) </p></td>
+													<td>
+														<div class="productButtons">
+															<button type="button" id="product@(item.Id)Button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#user@(item.Id)">
+																Edit
+															</button>
+															<a class="btn btn-outline-danger" onclick="return validateDeleteUser('@item.UserName','@(item.Id)');" @*asp-action="DeleteUser" asp-route-id="@item.Id"*@>Delete</a>
+														</div>
+													</td>
+												</tr>
+											}
+										</tbody>
+									</table>
+
+								</div>
+							</div>
+						}
+
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+	<!-- Button trigger modal -->
+	<button hidden type="button" id="showItems" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+		Launch demo modal
+	</button>
+	<!-- Modal -->
+	<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h1 class="modal-title fs-5" id="itemModelTitle"></h1>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					<p id="itemModelDescription"></p>
+					<div class="itemPrices">
+						<div class="itemPrice">
+							<p>Price 1:</p>
+							<h6 id="itemModelPrice"></h6>
+						</div>
+						<div class="itemPrice">
+							<p>Price 2:</p>
+							<h6 id="itemModelPrice2"></h6>
+						</div>
+						<div class="itemPrice">
+							<p>Price 3:</p>
+							<h6 id="itemModelPrice3"></h6>
+						</div>
+						<div class="itemPrice">
+							<p>Price 4:</p>
+							<h6 id="itemModelPrice4"></h6>
+						</div>
+						<div class="itemPrice">
+							<p>More Prices:</p>
+							<h6 id="itemModelMorePrices"></h6>
+						</div>
+					</div>
+					<div class="imageItemBody">
+						<img id="itemImages" />
+						<div class="imageItemBodyInfo">
+							<div class="imageItemBodyItem">
+								<p>Parent ID:</p>
+								<p class="font-weight-bold" id="itemModelCardId"></p>
+							</div>
+							<div class="imageItemBodyItem">
+								<p>Parent Name:</p>
+								<p class="font-weight-bold" id="itemModelparentName"></p>
+							</div>
+						</div>
+
+					</div>
+					<div class="amountTypeIdemDetails">
+						<div class="imageItemBodyItem">
+							<p>Amount:</p>
+							<p id="itemModelAmount"></p>
+						</div>
+						<div class="imageItemBodyItem">
+							<p>Type:</p>
+							<p id="itemModelTypeName"></p>
+						</div>
+					</div>
+					<div class="itemDates">
+						<div class="itemDate">
+							<p>Last Updated at:</p>
+							<p id="itemLastUpdatedAt"></p>
+						</div>
+						<div class="itemdate">
+							<p>Created at:</p>
+							<p id="itemCreatedAt"></p>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	@if (User.IsInRole(StaticDetails.ROLE_ADMIN))
+	{
+		<button hidden type="button" id="showUser" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#ShowUserModal">
+			Launch demo modal
+		</button>
+		<!-- Modal -->
+		<div class="modal fade" id="ShowUserModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h1 class="modal-title fs-5" id="userName"></h1>
+						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					</div>
+					<div class="modal-body">
+						<div class="userInfo">
+							<p>Email:</p>
+							<h6 id="UserEmail"></h6>
+						</div>
+						<div class="userInfo">
+							<p>Phone number:</p>
+							<h6 id="PhoneNumber"></h6>
+						</div>
+						<div class="userInfo">
+							<p>Role:</p>
+							<h6 id="UserRole"></h6>
+						</div>
+
+						<div class="userImageDS">
+							<img id="UserImage" />
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+	}
+
+
+	<form method="post" asp-action="Update" enctype="multipart/form-data">
+		<input hidden asp-for="EditedCardId" id="EditedCardId" value="cards[i].Id">
+		@for (int i = 0; i < Model.cards.Count; i++)
+		{
+			<input hidden asp-for="cards[i].Id">
+			<div class="modal fade" id="product@(Model.cards[i].Id)" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h1 class="modal-title fs-5">#@(Model.cards[i].Id)</h1>
+							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+						</div>
+						<div class="modal-body">
+							<div class="form-group">
+								<label asp-for="cards[i].Name">Name:</label>
+								<input asp-for="cards[i].Name" type="text" class="form-control">
+								<span asp-validation-for="cards[i].Name"></span>
+							</div>
+							<div class="form-group">
+								<label asp-for="cards[i].Description">Description:</label>
+								<textarea asp-for="cards[i].Description" class="form-control" rows="3"></textarea>
+									<span asp-validation-for="cards[i].Name"></span>
+							</div>
+							<div class="itemPrices">
+								<div class="itemPrice">
+									<label asp-for="cards[i].Price">Price 1:</label>
+									<input asp-for="cards[i].Price" class="form-control">
+								</div>
+								<div class="itemPrice">
+									<label asp-for="cards[i].Price2">Price 2:</label>
+									<input asp-for="cards[i].Price2" class="form-control">
+								</div>
+								<div class="itemPrice">
+									<label asp-for="cards[i].Price3">Price 3:</label>
+									<input asp-for="cards[i].Price3" class="form-control">
+								</div>
+								<div class="itemPrice">
+									<label asp-for="cards[i].Price4">Price 4:</label>
+									<input asp-for="cards[i].Price4" class="form-control">
+								</div>
+								<div class="itemPrice">
+									<label asp-for="cards[i].MorePrices">More Prices:</label>
+									<input asp-for="cards[i].MorePrices" class="form-control">
+								</div>
+							</div>
+							<div class="imageItemBody">
+								<label class="form-label">More Prices:</label>
+								<input type="file" id="fileImageUpdateCard" name="image" onchange="loadFile(event)" accept="image/*" class="form-control" />
+							</div>
+							<div class="form-group">
+								<label asp-for="cards[i].Amount">Amount:</label>
+								<input asp-for="cards[i].Amount" class="form-control">
+								<span asp-validation-for="cards[i].Amount"></span>
+							</div>
+							<div class="form-group mt-2">
+								<label>Select type:</label>
+								<select asp-for="cards[i].TypeId" asp-items="@Model.Types" class="form-select">
+									<option disabled selected> select type of item </option>
+								</select>
+								<span asp-validation-for="cards[i].TypeId"></span>
+							</div>
+							<div class="form-group mt-2">
+								<label >Select parent product:</label>
+								<select asp-for="cards[i].CardId" asp-items="@Model.CategoryTypes" class="form-select">
+									<option disabled selected> select parent type </option>
+									<option> No type </option>
+								</select>
+							</div>
+
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+							<button type="submit" onclick="return populateUpdateId(@i);" class="btn btn-primary">Update</button>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		}
+	</form>
+	@if (User.IsInRole(StaticDetails.ROLE_ADMIN))
+	{
+		<form method="post" asp-action="UpdateUser" enctype="multipart/form-data">
+			<input hidden asp-for="EditedUserIndex" id="EditedCardId" value="cards[i].Id">
+			<input hidden asp-for="Password" id="userChangePasswordValue">
+			<input hidden asp-for="Role" id="userChangePasswordValue">
+			<span asp-validation-for="Password"></span>
+			@for (int i = 0; i < Model.Users.Count; i++)
+			{
+				<input hidden asp-for="Users[i].Id">
+				<div class="modal fade" id="user@(Model.Users[i].Id)" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h1 class="modal-title fs-5">#@(
+							Model.Users[i].Id
+							)</h1>
+								<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+							</div>
+							<div class="modal-body">
+								<div class="form-group">
+									<label asp-for="Users[i].UserName">Username:</label>
+									<input asp-for="Users[i].UserName" type="text" class="form-control">
+									<span asp-validation-for="Users[i].UserName"></span>
+								</div>
+								<div class="form-group">
+									<label asp-for="Users[i].PhoneNumber">Phone number:</label>
+									<input asp-for="Users[i].PhoneNumber" type="text" class="form-control">
+									<span asp-validation-for="Users[i].PhoneNumber"></span>
+								</div>
+								<div class="form-group">
+									<label asp-for="Users[i].Email">Email:</label>
+									<input asp-for="Users[i].Email" type="text" class="form-control">
+									<span asp-validation-for="Users[i].Email"></span>
+								</div>
+								<div class="imageItemBody">
+									<label class="form-label">Avatar:</label>
+									<input type="file" id="fileImage" name="image" onchange="loadFile(event)" accept="image/*" class="form-control" />
+								</div>
+								<div class="form-group">
+									<label asp-for="Password">Change Password:</label>
+									<input type="text" id="userChangePassword" class="form-control">
+									<span asp-validation-for="Users[i].UserName"></span>
+								</div>
+								<div class="form-group mt-2">
+									<label>Select role:</label>
+									<select asp-for="Users[i].Role" asp-items="@Model.Roles" class="form-select">
+										<option disabled selected> select role </option>
+									</select>
+								</div>
+
+
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+								<button type="submit" onclick="return populateUpdateUserId(@i);" class="btn btn-primary">Update</button>
+							</div>
+						</div>
+					</div>
+				</div>
+
+			}
+		</form>
+	}
+
+	<form method="post" asp-action="CreateItem" enctype="multipart/form-data">
+		<div class="modal fade" id="newProduct" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h1 class="modal-title fs-5">New Item</h1>
+						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					</div>
+					<div class="modal-body">
+						<div class="form-group">
+							<label asp-for="newCard.Name">Name:</label>
+							<input asp-for="newCard.Name" type="text" class="form-control">
+							<span asp-validation-for="newCard.Name"></span>
+						</div>
+						<div class="form-group">
+							<label asp-for="newCard.Description">Description:</label>
+							<textarea asp-for="newCard.Description" class="form-control" rows="3"></textarea>
+							<span asp-validation-for="newCard.Description"></span>
+						</div>
+						<div class="itemPrices">
+							<div class="itemPrice">
+								<label asp-for="newCard.Price">Price 1:</label>
+								<input asp-for="newCard.Price" class="form-control">
+								<span asp-validation-for="newCard.Price"></span>
+							</div>
+							<div class="itemPrice">
+								<label asp-for="newCard.Price2">Price 2:</label>
+								<input asp-for="newCard.Price2" class="form-control">
+								<span asp-validation-for="newCard.Price2"></span>
+							</div>
+							<div class="itemPrice">
+								<label asp-for="newCard.Price3">Price 3:</label>
+								<input asp-for="newCard.Price3" class="form-control">
+								<span asp-validation-for="newCard.Price3"></span>
+							</div>
+							<div class="itemPrice">
+								<label asp-for="newCard.Price4">Price 4:</label>
+								<input asp-for="newCard.Price4" class="form-control">
+								<span asp-validation-for="newCard.Price4"></span>
+							</div>
+							<div class="itemPrice">
+								<label asp-for="newCard.MorePrices">More Prices:</label>
+								<input asp-for="newCard.MorePrices" class="form-control">
+								<span asp-validation-for="newCard.MorePrices"></span>
+							</div>
+						</div>
+						<div class="imageItemBody">
+							<label class="form-label">More Prices:</label>
+							<input type="file" id="fileImageCreateCard" name="image" onchange="loadFile(event)" accept="image/*" class="form-control" />
+						</div>
+						<div class="form-group">
+							<label asp-for="newCard.Amount">Amount:</label>
+							<input asp-for="newCard.Amount" class="form-control">
+							<span asp-validation-for="newCard.Amount"></span>
+						</div>
+						<div class="form-group mt-2">
+							<label asp-for="NewUser.Email">Chose type:</label>
+							<select asp-for="newCard.TypeId" asp-items="@Model.Types" class="form-select">
+								<option disabled selected> select type of item </option>
+							</select>
+							<span asp-validation-for="newCard.TypeId"></span>
+						</div>
+						<div class="form-group mt-2">
+							<label asp-for="NewUser.Email">Chose parent:</label>
+							<select asp-for="newCard.CardId" asp-items="@Model.CategoryTypes" class="form-select">
+								<option disabled selected> select parent type </option>
+								<option> No type </option>
+							</select>
+						</div>
+
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+						<button type="submit" onclick="return checkImageCard();" class="btn btn-primary">Create</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</form>
+	@if (User.IsInRole(StaticDetails.ROLE_ADMIN))
+	{
+		<form method="post" asp-action="CreateUser" enctype="multipart/form-data">
+			<div class="modal fade" id="newUser" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h1 class="modal-title fs-5">New User</h1>
+							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+						</div>
+						<div class="modal-body">
+							<div class="form-group">
+								<label asp-for="NewUser.UserName">Name:</label>
+								<input id="newUserName"  asp-for="NewUser.UserName" type="text" class="form-control">
+								<span asp-validation-for="NewUser.UserName"></span>
+							</div>
+							<div class="form-group">
+								<label asp-for="NewUser.PhoneNumber">Phone Number:</label>
+								<input id="newUserPhone"  asp-for="NewUser.PhoneNumber" class="form-control">
+								<span asp-validation-for="NewUser.PhoneNumber"></span>
+							</div>
+							<div class="form-group">
+								<label asp-for="NewUser.Email">Email:</label>
+								<input id="newUserEmail" asp-for="NewUser.Email" type="text" class="form-control">
+								<span asp-validation-for="NewUser.Email"></span>
+							</div>
+							<div class="imageItemBody">
+								<label class="form-label">Image:</label>
+								<input type="file" id="fileImageCreateUser" name="image" onchange="loadFile(event)" accept="image/*" class="form-control" />
+							</div>
+							<div class="form-group">
+								<label asp-for="Password" class="form-label">Password:</label>
+								<input id="newUserPassword" asp-for="Password" type="text" class="form-control">
+								<span asp-validation-for="Password"></span>
+							</div>
+							<div class="form-group mt-2">
+								<label asp-for="NewUser.Email">Chose role</label>
+								<select asp-for="Role" asp-items="@Model.Roles" class="form-select">
+									<option disabled selected> select role of item </option>
+								</select>
+								<span asp-validation-for="Role"></span>
+							</div>		
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+							<button type="submit" onclick="return checkImageUser();" class="btn btn-primary">Create</button>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</form>
+
+
+	}
+</div>
+
+
+
+
+@section Scripts{
+	@{
+		<partial name="_ValidationScriptsPartial" />
+	}
+	<script src="~/js/Controls.js"></script>
+}

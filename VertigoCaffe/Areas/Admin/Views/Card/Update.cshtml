@@ -1,0 +1,79 @@
+﻿@model Models.ViewModels.CardVM
+@{
+    ViewData["Title"] = "Create";
+}
+<form method="post" enctype="multipart/form-data">
+    <input hidden asp-for="Card.Id"/>
+    <div class="container">
+        <div class="row pt-4">
+            <div class="col-2 p-4">
+                <h1>Create new card</h1>
+            </div>
+            <div class="col-2 float-end p-4">
+                <a asp-action="Index">Back</a>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6">
+                <div class="input-group">
+                    <label asp-for="Card.Name" class="form-label"></label>
+                    <input asp-for="Card.Name" class="form-control" />
+                    <span asp-validation-for="Card.Name"></span>
+                </div>
+                <div class="input-group">
+                    <label asp-for="Card.Description" class="form-label"></label>
+                    <textarea asp-for="Card.Description" rows=4></textarea>
+                </div>
+                <div class="input-group">
+                    <label asp-for="Card.Price" class="form-label"></label>
+                    <input asp-for="Card.Price" class="form-control" />
+
+                </div>
+                <div class="input-group">
+                    <label asp-for="Card.Price2" class="form-label"></label>
+                    <input asp-for="Card.Price2" class="form-control" />
+                </div>
+                <div class="input-group">
+                    <label asp-for="Card.Price3" class="form-label"></label>
+                    <input asp-for="Card.Price3" class="form-control" />
+                </div>
+                <div class="input-group">
+                    <label asp-for="Card.MorePrices" class="form-label"></label>
+                    <input asp-for="Card.MorePrices" class="form-control" />
+                </div>
+                <div class="input-group">
+                    <label asp-for="Card.Amount" class="form-label"></label>
+                    <input asp-for="Card.Amount" class="form-control" />
+
+                </div>
+                <div class="input-group">
+                    <label asp-for="Card.Image" class="form-label"></label>
+                    <input type="file" id="fileImage" name="image" onchange="loadFile(event)" accept="image/*" class="form-control" />
+                </div>
+                <div class="input-group">
+                    <select asp-for="Card.TypeId" asp-items="@Model.Types" class="form-select">
+                        <option disabled selected> select type of item </option>
+                    </select>
+                    <span asp-validation-for="Card.TypeId"></span>
+                </div>
+                <div class="input-group">
+                    <select asp-for="Card.CardId" asp-items="@Model.CategoryTypes" class="form-select">
+                        <option disabled selected> select parent type </option>
+                        <option> No type </option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <button type="submit"> Update Element </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+@section Scripts{
+    @{
+        <partial name="_ValidationScriptsPartial" />
+    }
+
+
+}
